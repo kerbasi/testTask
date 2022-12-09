@@ -1,0 +1,13 @@
+﻿.page {
+  display: flex;
+}
+
+.aside {
+  flex-basis: 25%;
+}
+
+.aside__radio {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
