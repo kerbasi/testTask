@@ -3,7 +3,27 @@
 }
 
 .aside {
-  flex-basis: 25%;
+  flex-basis: 20%;
+  max-width: 250px;
+}
+
+.aside-form__item {
+  margin-top: 10px;
+}
+
+.aside-form__item:first-of-type {
+  margin: 0;
+}
+
+.aside-form__label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.aside-form__text-input {
+  display: flex;
+  gap: 5px;
 }
 
 .aside__radio {

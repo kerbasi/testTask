@@ -9,28 +9,56 @@
 </head>
 <body class="page">
   <aside class="aside">
-    <form class="aside__form">
-      <div class="aside__radio">
-        <label for="aside__radio-label">Сортировать</label>
-        <label class="aside__radio-item-label"><input class="aside__radio-item" type="radio" name="aside__radio" id="">
-          - по возрастанию цены</label>
-        <label class="aside__radio-item-label"><input class="aside__radio-item" type="radio" name="aside__radio" id="">
-          - по убыванию цены</label>
-        <label class="aside__radio-item-label"><input class="aside__radio-item" type="radio" name="aside__radio" id="">
-          - по времени пути</label>
+    <form class="aside-form">
+      <div class="aside-form__item">
+        <label class="aside-form__label">Сортировать</label>
+        <div class="aside-form__radio">
+          <input checked class="aside__radio-item" type="radio" name="aside__radio" id="radio_1">
+          <label class="aside-form__label-inline" for="radio_1">- по возрастанию цены</label>
+        </div>
+        <div class="aside-form__radio">
+          <input class="aside__radio-item" type="radio" name="aside__radio" id="radio_2">
+          <label class="aside-form__label-inline" for="radio_2">- по убыванию цены</label>
+        </div>
+        <div class="aside-form__radio">
+          <input class="aside__radio-item" type="radio" name="aside__radio" id="radio_2">
+          <label class="aside-form__label-inline" for="radio_3">- по времени в пути</label>
+        </div>
       </div>
-      <label for="aside__checkbox-label">Фильтровать</label>
-      <div class="aside__checkbox">
-        <input class="aside__checkbox-item" type="checkbox" name="aside__radio" id="">
-        <label class="aside__checkbox-item-label">
-          - 1 пересадка</label>
-        <input class="aside__checkbox-item" type="checkbox" name="aside__radio" id="">
-        <label class="aside__checkbox-item-label">
-          - без пересадок</label>
+      <div class="aside-form__item">
+        <label class="aside-form__label">Фильтровать</label>
+        <div class="aside-form__checkbox">
+          <input class="aside-form__checkbox" type="checkbox" name="aside-form__radio" id="check_1">
+          <label class="aside-form__label-inline" for="check_1">
+            - 1 пересадка</label>
+        </div>
+        <div class="aside-form__checkbox">
+          <input class="aside-form__checkbox" type="checkbox" name="aside-form__radio" id="check_2">
+          <label class="aside-form__label-inline" for="check_2">
+            - без пересадок</label>
+        </div>
+      </div>
+      <div class="aside-form__item">
+        <label class="aside-form__label">Цена</label>
+        <div class="aside-form__text-input">
+          <label for="text-input_1" class="aside-form__label-inline">От</label>
+          <input class="aside-form__text-input" type="number" min="0" value="0">
+        </div>
+        <div class="aside-form__text-input">
+          <label for="text-input_1" class="aside-form__label-inline">До</label>
+          <input class="aside-form__text-input" type="number" min="0" value="100000">
+        </div>
+      </div>
+      <div class="aside-form__item aside-form__item_type_carriers">
+        <label class="aside-form__label">Авиакомпании</label>
       </div>
     </form>
   </aside>
-  <main class="main"></main>
+  <main class="main">
+    <article class="main__card">
+
+    </article>
+  </main>
   </main>
   <script type="module" src="script.js"></script>
 </body>
