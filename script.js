@@ -6,6 +6,9 @@ async function getFlightsData(url) {
   responseData = responseData.result.flights;
   console.log(responseData);
   getCarriersRadio(responseData);
+  responseData.forEach(({ flight }) => {
+    console.log(flight.legs[0].segments.length);
+  });
 }
 
 function getCarriersRadio(flights) {
