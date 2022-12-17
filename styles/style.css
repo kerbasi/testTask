@@ -1,12 +1,15 @@
 ﻿.page {
   display: flex;
+  justify-content: space-around;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 20px;
+  --blue: #0087c9;
+  --white: #fff;
 }
 
 .aside {
   flex-basis: 25%;
   max-width: 300px;
-  padding-left: 20px;
-  padding-top: 20px;
   font-size: 14px;
 }
 
@@ -43,4 +46,82 @@
   display: inline-block;
   position: relative;
   top: 4px;
+}
+
+.main {
+  width: 70%;
+}
+
+.main__card {
+  width: 100%;
+  min-width: 600px;
+  max-width: 800px;
+}
+
+.main__card-header {
+  width: 100%;
+  background: var(--blue);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+.main__card-logo {
+  width: 200px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.main__card-price {
+  text-align: end;
+}
+
+.main__card-price-value {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.main__card-price-sub {
+  margin: 0;
+  font-style: 10px;
+}
+
+.blue-text {
+  color: var(--blue);
+}
+
+.smaller-text {
+  font-size: 0.8em;
+}
+
+.main__card-leg {
+  width: 95%;
+  padding-left: 20px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 800px;
+  border-bottom: 1px solid #e8e4e4;
+}
+
+.main__card-time {
+  width: 95%;
+  padding-left: 20px;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.main__card-segments {
+  display: flex;
+}
+
+.main__card-segments-line {
+}
+
+.main__card-segments-number {
 }

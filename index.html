@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/vendor/normalize.css">
   <link rel="stylesheet" href="/styles/style.css">
-  <title>Document</title>
+  <script src="https://kit.fontawesome.com/1383a3ef05.js" crossorigin="anonymous"></script>
+  <title>Flight search</title>
 </head>
 <body class="page">
   <aside class="aside">
@@ -57,9 +58,27 @@
   </aside>
   <main class="main">
     <article class="main__card">
-      <div class="main__card-header">
-        <img class="main__card-logo" src="./images/aeroflot.png" alt="аэрофлот лого">
-        <h1 </div>
+      <section class="main__card-header">
+        <img class="main__card-logo" src="./images/turk-hava.png" alt="аэрофлот лого">
+        <div class="main__card-price">
+          <p class="main__card-price-value">21049 &#8381;</p>
+          <p class="main__card-price-sub">Стоимость для одного взрослого пассажира</p>
+        </div>
+      </section>
+      <section class="main__card-leg">
+        <p class="main__card-leg-text">Москва, ШЕРЕМЕТЬЕВО <span class="blue-text">(SVO) &rarr;</span> ЛОНДОН, Лондон,
+          Хитроу <span class="blue-text">(LHR)</span></p>
+      </section>
+      <section class="main__card-time">
+        <p class="main__card-time-departure">20:40 <span class="blue-text">18 авг. вт</span></p>
+        <p class="main__card-time-travel"><i class="far fa-clock"></i> 14 ч 45 мин</p>
+        <p class="main__card-time-arrival"><span class="smaller-text blue-text">19 авг. ср</span> 09:25</p>
+      </section>
+      <section class="main__card-segments">
+        <div class="main__card-segments-line"></div>
+        <div class="main__card-segments-number"></div>
+        <div class="main__card-segments-line"></div>
+      </section>
     </article>
   </main>
   </main>
