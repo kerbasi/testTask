@@ -41,4 +41,6 @@ function getCarriersRadio(flights) {
   }
 }
 
+function getFligthCard() {}
+
 getFlightsData(url);
