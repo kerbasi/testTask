@@ -18,7 +18,7 @@ async function getFlightsData(url) {
   responseData = responseData.result.flights;
   console.log(responseData);
   getCarriersRadio(responseData);
-  getFlightCard(responseData[0].flight);
+  getFlightCard(responseData[5].flight);
 }
 
 function getCarriersRadio(flights) {
@@ -64,6 +64,7 @@ function getFlightCard(flight) {
   card.appendChild(getCardOneWay(flight, "forward"));
   card.appendChild(divider);
   card.appendChild(getCardOneWay(flight, "backward"));
+  card.appendChild(getCardButton(flight));
   main.appendChild(card);
 }
 
@@ -144,6 +145,13 @@ function getCardOneWay(flight, direction = "forward") {
   </section>
   `;
   return cardOneWay;
+}
+
+function getCardButton(flight) {
+  const cardButton = document.createElement("button");
+  cardButton.classList.add("main__card-button");
+  cardButton.innerHTML = "ВЫБРАТЬ";
+  return cardButton;
 }
 
 getFlightsData(url);
