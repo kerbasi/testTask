@@ -4,7 +4,7 @@
   justify-content: center;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
-  padding-top: 20px;
+  padding: 20px 0 20px;
   --blue: #0087c9;
   --white: #fff;
   --gray: #a2a2a2;
@@ -12,6 +12,7 @@
   --light-gray: #e5e5e5;
   --orange: #ffab14;
   --light-orange: #ffb168;
+  --black: #000;
   margin: 0 auto;
   max-width: 1200px;
 }
@@ -141,7 +142,7 @@
   align-items: center;
   margin: 0 auto;
   width: 80%;
-  column-gap: 10px;
+  /* column-gap: 10px; */
 }
 
 .main__card-segments-line {
@@ -153,6 +154,7 @@
   text-align: center;
   flex-shrink: 0;
   color: var(--orange);
+  margin: 0 10px 0;
 }
 
 .main__card-carrier {
@@ -179,4 +181,18 @@
   background: var(--light-orange);
   color: var(--white);
   cursor: pointer;
+}
+
+.main__button {
+  border-radius: 0;
+  border: 1px solid var(--black);
+  width: 40%;
+  background: var(--light-gray);
+  height: 25px;
+  display: block;
+  margin: 20px auto 0;
+}
+
+.main__button:hover {
+  background: var(--gray);
 }
