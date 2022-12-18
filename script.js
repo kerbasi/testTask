@@ -12,6 +12,23 @@ const carriersLogos = {
   TK: "./images/turk-hava.png",
 };
 
+const months = [
+  "янв.",
+  "фев.",
+  "март",
+  "апр.",
+  "май",
+  "июнь",
+  "июль",
+  "авг.",
+  "сент.",
+  "окт.",
+  "ноя.",
+  "дек.",
+];
+
+const weekDays = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
+
 async function getFlightsData(url) {
   const response = await fetch(url);
   let responseData = await response.json();
@@ -105,15 +122,18 @@ function getCardOneWay(flight, direction = "forward") {
   const arrivalAirportUid =
     flight.legs[legIndex].segments[flight.legs[legIndex].segments.length - 1]
       .arrivalAirport.uid;
-  let departureDate = flight.legs[legIndex].segments[0].departureDate;
-  let departureTime = departureDate.slice(departureDate.indexOf("T") + 1, -3);
-  let arrivalDate =
-    flight.legs[legIndex].segments[flight.legs[legIndex].segments.length - 1]
-      .arrivalDate;
-  let arrivalTime = arrivalDate.slice(arrivalDate.indexOf("T") + 1, -3);
+  let departureDate = new Date(flight.legs[legIndex].segments[0].departureDate);
+
+  let arrivalDate = new Date(
+    flight.legs[legIndex].segments[
+      flight.legs[legIndex].segments.length - 1
+    ].arrivalDate
+  );
   const duration = flight.legs[legIndex].duration;
   const legCarrier = flight.legs[legIndex].segments[0].airline.caption;
-  console.log(departureTime, arrivalTime);
+
+  console.log(departureDate.getMonth());
+
   cardOneWay.classList.add("main__card-one-way");
   cardOneWay.innerHTML = `
   <section class="main__card-one-way">
@@ -122,17 +142,29 @@ function getCardOneWay(flight, direction = "forward") {
             class="bigger-text">&rarr;</span></span> ${arrivalCity}, ${arrivalAirport} <span class="blue-text">(${arrivalAirportUid})</span></p>
     </div>
     <div class="main__card-time">
-      <p class="main__card-time-departure">${departureTime} <span class="smaller-text blue-text">18 авг. вт</span></p>
+      <p class="main__card-time-departure">${departureDate.getHours()}:${
+    (departureDate.getMinutes() < 10 ? "0" : "") + departureDate.getMinutes()
+  } <span class="smaller-text blue-text">${departureDate.getDate()} ${
+    months[departureDate.getMonth()]
+  }. ${weekDays[departureDate.getDay()]}</span></p>
       <p class="main__card-time-travel"><i class="far fa-clock"></i> ${Math.floor(
         duration / 60
       )} ч ${duration % 60} мин</p>
-      <p class="main__card-time-arrival"><span class="smaller-text blue-text">19 авг. ср</span> ${arrivalTime}</p>
+      <p class="main__card-time-arrival"><span class="smaller-text blue-text">${arrivalDate.getDate()} ${
+    months[arrivalDate.getMonth()]
+  }. ${weekDays[arrivalDate.getDay()]}</span> ${arrivalDate.getHours()}:${
+    (arrivalDate.getMinutes() < 10 ? "0" : "") + arrivalDate.getMinutes()
+  }</p>
     </div>
     <div class="main__card-segments">
       <div class="main__card-segments-line"></div>
       ${
-        flight.legs[legIndex].segments.length > 1
+        flight.legs[legIndex].segments.length === 2
           ? `<div class="main__card-segments-number">1 пересадка</div>`
+          : flight.legs[legIndex].segments.length > 2
+          ? `<div class="main__card-segments-number">${
+              flight.legs[legIndex].segments.length - 1
+            } пересадок</div>`
           : ``
       }
       <div class="main__card-segments-line"></div>
@@ -155,60 +187,3 @@ function getCardButton(flight) {
 }
 
 getFlightsData(url);
-/* <article class="main__card">
-<section class="main__card-header">
-  <img class="main__card-logo" src="./images/turk-hava.png" alt="аэрофлот лого">
-  <div class="main__card-price">
-    <p class="main__card-price-value">21049 &#8381;</p>
-    <p class="main__card-price-sub">Стоимость для одного взрослого пассажира</p>
-  </div>
-</section>
-<section class="main__card-one-way">
-  <div class="main__card-leg">
-    <p class="main__card-leg-text">Москва, ШЕРЕМЕТЬЕВО <span class="blue-text">(SVO) <span
-          class="bigger-text">&rarr;</span></span> ЛОНДОН, Лондон,
-      Хитроу <span class="blue-text">(LHR)</span></p>
-  </div>
-  <div class="main__card-time">
-    <p class="main__card-time-departure">20:40 <span class="smaller-text blue-text">18 авг. вт</span></p>
-    <p class="main__card-time-travel"><i class="far fa-clock"></i> 14 ч 45 мин</p>
-    <p class="main__card-time-arrival"><span class="smaller-text blue-text">19 авг. ср</span> 09:25</p>
-  </div>
-  <div class="main__card-segments">
-    <div class="main__card-segments-line"></div>
-    <div class="main__card-segments-number">1 пересадка</div>
-    <div class="main__card-segments-line"></div>
-  </div>
-  <div class="main__card-carrier">
-    <p class="main__card-carrier-text">
-      Рейс выполняет: Аэрофлот - российский авиалинии
-    </p>
-  </div>
-</section>
-<div class="main__card-divider"></div>
-<section class="main__card-one-way">
-  <div class="main__card-leg">
-    <p class="main__card-leg-text">Москва, ШЕРЕМЕТЬЕВО <span class="blue-text">(SVO) <span
-          class="bigger-text">&rarr;</span></span> ЛОНДОН, Лондон,
-      Хитроу <span class="blue-text">(LHR)</span></p>
-  </div>
-  <div class="main__card-time">
-    <p class="main__card-time-departure">20:40 <span class="smaller-text blue-text">18 авг. вт</span></p>
-    <p class="main__card-time-travel"><i class="far fa-clock"></i> 14 ч 45 мин</p>
-    <p class="main__card-time-arrival"><span class="smaller-text blue-text">19 авг. ср</span> 09:25</p>
-  </div>
-  <div class="main__card-segments">
-    <div class="main__card-segments-line"></div>
-    <div class="main__card-segments-number">1 пересадка</div>
-    <div class="main__card-segments-line"></div>
-  </div>
-  <div class="main__card-carrier">
-    <p class="main__card-carrier-text">
-      Рейс выполняет: Аэрофлот - российский авиалинии
-    </p>
-  </div>
-</section>
-<button class="main__card-button">
-  ВЫБРАТЬ
-</button>
-</article> */

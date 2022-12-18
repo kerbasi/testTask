@@ -195,4 +195,5 @@
 
 .main__button:hover {
   background: var(--gray);
+  cursor: pointer;
 }
