@@ -35,7 +35,7 @@ async function getFlightsData(url) {
   responseData = responseData.result.flights;
   console.log(responseData);
   getCarriersRadio(responseData);
-  getFlightCard(responseData[5].flight);
+  getFlightCard(responseData[2].flight);
 }
 
 function getCarriersRadio(flights) {
