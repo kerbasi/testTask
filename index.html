@@ -11,31 +11,31 @@
 </head>
 <body class="page">
   <aside class="aside">
-    <form class="aside-form">
+    <form class="aside-form" id="form">
       <div class="aside-form__item">
         <label class="aside-form__label">Сортировать</label>
         <div class="aside-form__radio">
-          <input checked class="aside__radio-item" type="radio" name="aside__radio" id="radio_1">
+          <input checked class="aside__radio-item" type="radio" name="sort" value="price_increase" id="radio_1">
           <label class="aside-form__label-inline" for="radio_1">- по возрастанию цены</label>
         </div>
         <div class="aside-form__radio">
-          <input class="aside__radio-item" type="radio" name="aside__radio" id="radio_2">
+          <input class="aside__radio-item" type="radio" name="sort" value="price_decrease" id="radio_2">
           <label class="aside-form__label-inline" for="radio_2">- по убыванию цены</label>
         </div>
         <div class="aside-form__radio">
-          <input class="aside__radio-item" type="radio" name="aside__radio" id="radio_2">
+          <input class="aside__radio-item" type="radio" name="sort" value="travel_time" id="radio_3">
           <label class="aside-form__label-inline" for="radio_3">- по времени в пути</label>
         </div>
       </div>
       <div class="aside-form__item">
         <label class="aside-form__label">Фильтровать</label>
         <div class="aside-form__checkbox">
-          <input class="aside-form__checkbox" type="checkbox" name="aside-form__radio" id="check_1">
+          <input class="aside-form__checkbox" checked type="checkbox" name="section_2" id="check_1">
           <label class="aside-form__label-inline" for="check_1">
             - 1 пересадка</label>
         </div>
         <div class="aside-form__checkbox">
-          <input class="aside-form__checkbox" type="checkbox" name="aside-form__radio" id="check_2">
+          <input class="aside-form__checkbox" checked type="checkbox" name="section_1" id="check_2">
           <label class="aside-form__label-inline" for="check_2">
             - без пересадок</label>
         </div>
@@ -44,11 +44,11 @@
         <label class="aside-form__label">Цена</label>
         <div class="aside-form__text-input">
           <label for="text-input_1" class="aside-form__label-inline">От</label>
-          <input class="aside-form__text-input" type="number" min="0" value="0">
+          <input class="aside-form__text-input" type="number" id="text-input_1" name="min_price">
         </div>
         <div class="aside-form__text-input">
-          <label for="text-input_1" class="aside-form__label-inline">До</label>
-          <input class="aside-form__text-input" type="number" min="0" value="100000">
+          <label for="text-input_2" class="aside-form__label-inline">До</label>
+          <input class="aside-form__text-input" type="number" id="text-input_2" name="max_price">
         </div>
       </div>
       <div class="aside-form__item aside-form__item_type_carriers">

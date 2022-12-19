@@ -29,16 +29,64 @@ const months = [
 
 const weekDays = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
 
+let cardIndex = 0;
+
 async function getFlightsData(url) {
   const response = await fetch(url);
   let responseData = await response.json();
   responseData = responseData.result.flights;
-  console.log(responseData);
-  getCarriersRadio(responseData);
-  getFlightCard(responseData[2].flight);
+  filterFlights(responseData);
 }
 
-function getCarriersRadio(flights) {
+function filterFlights(flights) {
+  const form = document.forms.form;
+  console.log(form.max_price.value);
+  const filteredFlights = flights.filter(({ flight }) => {
+    if (form.section_1.checked && !form.section_2.checked) {
+      return (
+        flight.legs[0].segments.length < 2 &&
+        flight.price.total.amount >= form.min_price.value &&
+        flight.price.total.amount <= form.max_price.value
+      );
+    } else if (form.section_1.checked && !form.section_2.checked) {
+      return (
+        flight.legs[0].segments.length > 1 &&
+        flight.price.total.amount >= form.min_price.value &&
+        flight.price.total.amount <= form.max_price.value
+      );
+    } else {
+      return (
+        flight.price.total.amount >= form.min_price.value &&
+        flight.price.total.amount <= form.max_price.value
+      );
+    }
+  });
+  if (form.sort.value === "price_increase") {
+    filteredFlights.sort(
+      (a, b) => a.flight.price.total.amount - b.flight.price.total.amount
+    );
+  } else if (form.sort.value === "price_decrease") {
+    filteredFlights.sort(
+      (a, b) => b.flight.price.total.amount - a.flight.price.total.amount
+    );
+  } else {
+    filteredFlights.sort(
+      (a, b) => a.flight.legs[0].duration - b.flight.legs[0].duration
+    );
+  }
+  getCarriersCheckboxes(filteredFlights);
+  // filterFlights = filterFlights.filter(({ flight }) => {});
+
+  console.log(
+    Array.from(form.querySelectorAll(".aside-form__checkbox-carriers"))
+      .filter((item) => item.firstElementChild.checked)
+      .map((item) => item.firstElementChild.name)
+  );
+
+  if (filteredFlights.length) getFlightCard(filteredFlights[cardIndex].flight);
+}
+
+function getCarriersCheckboxes(flights) {
   const carrierCheckGroup = document.querySelector(
     ".aside-form__item_type_carriers"
   );
@@ -53,18 +101,16 @@ function getCarriersRadio(flights) {
       };
     }
   });
-  console.log(carriers);
   let index = 0;
+  console.log(carriers);
   for (const carrier in carriers) {
     const carrierCheckEl = document.createElement("div");
     carrierCheckEl.classList.add("aside-form__checkbox-carriers");
     carrierCheckEl.innerHTML = `
-        <input class="aside-form__checkbox" type="checkbox" name="aside-form__radio-carrier" id="check-carrier_${index}">
-        <label class="aside-form__label-inline" for="check_1"><span class="aside__carrier-name">${
-          carriers[carrier].caption
-        }</span> от ${
-      carriers[carrier].price.sort((a, b) => a - b)[0]
-    } р.</label>
+        <input class="aside-form__checkbox" checked type="checkbox" name="${carrier}" id="check-carrier_${index}">
+        <label class="aside-form__label-inline" for="check-carrier_${index}"><span class="aside__carrier-name">${
+      carriers[carrier].caption
+    }</span> от ${carriers[carrier].price.sort((a, b) => a - b)[0]} р.</label>
     `;
     carrierCheckGroup.appendChild(carrierCheckEl);
     index++;
@@ -131,8 +177,6 @@ function getCardOneWay(flight, direction = "forward") {
   );
   const duration = flight.legs[legIndex].duration;
   const legCarrier = flight.legs[legIndex].segments[0].airline.caption;
-
-  console.log(departureDate.getMonth());
 
   cardOneWay.classList.add("main__card-one-way");
   cardOneWay.innerHTML = `
