@@ -37,21 +37,54 @@ let cardIndex = 0;
 async function getFlightsData(url) {
   const response = await fetch(url);
   let responseData = await response.json();
-  responseData = responseData.result.flights;
-  setPricesLimits(responseData);
-  renderPage(responseData);
-  return responseData;
+
+  const form = document.forms.form;
+  data = responseData.result.flights;
+  setPricesLimits(data);
+  form.section_1.checked = false;
+  Array.from(form).forEach((item) =>
+    item.addEventListener("change", () => {
+      clearCards();
+      cardIndex = 0;
+      renderCarriersCheck(data);
+      renderCard(data);
+    })
+  );
+  document.querySelector(".main__button").addEventListener("click", () => {
+    addCard(data);
+  });
+  form.section_2.checked = false;
+  renderCarriersCheck(data);
+  renderCard(data);
 }
 
-function renderPage(flights) {
+function renderCarriersCheck(flights) {
   let filteredFlights = filterFlights(flights);
   if (filteredFlights.length) {
     getCarriersCheckboxes(filteredFlights);
   }
+}
+
+function renderCard(flights) {
+  let filteredFlights = filterFlights(flights);
   filteredFlights = filterByCarriers(filteredFlights);
-  if (filteredFlights.length) {
-    getFlightCard(filteredFlights[cardIndex].flight);
+  console.log(cardIndex);
+  if (filteredFlights.length && filteredFlights.length > cardIndex) {
+    sortFlights(filteredFlights);
+    getFlightCard(filteredFlights);
+    cardIndex++;
+    document.querySelector(".main__button").classList.remove("disable");
+  } else if (filteredFlights.length === 0) {
+    getMainMessage("Нет подходящих полетов");
+    document.querySelector(".main__button").classList.add("disable");
+  } else {
+    document.querySelector(".main__button").classList.add("disable");
   }
+}
+
+function getMainMessage(text) {
+  const main = document.querySelector(".main__cards");
+  main.innerHTML = `<p class="main__message">${text}</p>`;
 }
 
 function filterFlights(flights) {
@@ -76,20 +109,27 @@ function filterFlights(flights) {
       return answer;
     }
   });
+  return filteredFlights;
+}
+
+function sortFlights(flights) {
   if (form.sort.value === "price_increase") {
-    filteredFlights.sort(
+    flights.sort(
       (a, b) => a.flight.price.total.amount - b.flight.price.total.amount
     );
   } else if (form.sort.value === "price_decrease") {
-    filteredFlights.sort(
+    flights.sort(
       (a, b) => b.flight.price.total.amount - a.flight.price.total.amount
     );
   } else {
-    filteredFlights.sort(
+    flights.sort(
       (a, b) => a.flight.legs[0].duration - b.flight.legs[0].duration
     );
   }
-  return filteredFlights;
+}
+
+function addCard(flights) {
+  renderCard(data);
 }
 
 function filterByCarriers(flights) {
@@ -99,7 +139,10 @@ function filterByCarriers(flights) {
   )
     .filter((item) => item.firstElementChild.checked)
     .map((item) => item.firstElementChild.name);
-  return flights;
+  const filteredFlights = flights.filter(({ flight }) =>
+    checkedCarriers.includes(flight.carrier.uid)
+  );
+  return filteredFlights;
 }
 
 function getCarriers(flights) {
@@ -135,7 +178,6 @@ function setPricesLimits(flights) {
     let maxPrice = carriers[carrier].price.sort(
       (a, b) => parseInt(b) - parseInt(a)
     )[0];
-    console.log(minPrice, minPriceForAll, maxPrice, maxPriceForAll);
     if (parseInt(minPriceForAll) > parseInt(minPrice)) {
       minPriceForAll = minPrice;
     }
@@ -149,6 +191,11 @@ function setPricesLimits(flights) {
   maxPriceEl.value = maxPriceForAll;
 }
 
+function clearCards() {
+  const main = document.querySelector(".main__cards");
+  main.innerHTML = "";
+}
+
 function getCarriersCheckboxes(flights) {
   const carriers = getCarriers(flights);
   let index = 0;
@@ -156,9 +203,15 @@ function getCarriersCheckboxes(flights) {
     const carrierCheckGroup = document.querySelector(
       ".aside-form__item_type_carriers"
     );
+    carrierCheckGroup.innerHTML = "";
     for (const carrier in carriers) {
       const carrierCheckEl = document.createElement("div");
       carrierCheckEl.classList.add("aside-form__checkbox-carriers");
+      carrierCheckEl.addEventListener("change", () => {
+        cardIndex = 0;
+        clearCards();
+        renderCard(data);
+      });
       carrierCheckEl.innerHTML = `
         <input class="aside-form__checkbox" checked type="checkbox" name="${carrier}" id="check-carrier_${index}">
         <label class="aside-form__label-inline" for="check-carrier_${index}"><span class="aside__carrier-name">${
@@ -171,7 +224,8 @@ function getCarriersCheckboxes(flights) {
   }
 }
 
-function getFlightCard(flight) {
+function getFlightCard(flights) {
+  const flight = flights[cardIndex].flight;
   const main = document.querySelector(".main__cards");
   const card = document.createElement("article");
   const divider = document.createElement("div");
@@ -284,4 +338,4 @@ function getCardButton(flight) {
   return cardButton;
 }
 
-data = getFlightsData(url);
+getFlightsData(url);
