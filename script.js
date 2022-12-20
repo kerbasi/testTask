@@ -1,4 +1,7 @@
 ﻿const url = "./data/flights.json";
+
+let data = [];
+
 const carriersLogos = {
   AF: "./images/air-france.png",
   AY: "./images/Finnair.png",
@@ -35,30 +38,42 @@ async function getFlightsData(url) {
   const response = await fetch(url);
   let responseData = await response.json();
   responseData = responseData.result.flights;
-  filterFlights(responseData);
+  setPricesLimits(responseData);
+  renderPage(responseData);
+  return responseData;
+}
+
+function renderPage(flights) {
+  let filteredFlights = filterFlights(flights);
+  if (filteredFlights.length) {
+    getCarriersCheckboxes(filteredFlights);
+  }
+  filteredFlights = filterByCarriers(filteredFlights);
+  if (filteredFlights.length) {
+    getFlightCard(filteredFlights[cardIndex].flight);
+  }
 }
 
 function filterFlights(flights) {
   const form = document.forms.form;
-  console.log(form.max_price.value);
   const filteredFlights = flights.filter(({ flight }) => {
     if (form.section_1.checked && !form.section_2.checked) {
       return (
         flight.legs[0].segments.length < 2 &&
-        flight.price.total.amount >= form.min_price.value &&
-        flight.price.total.amount <= form.max_price.value
+        parseInt(flight.price.total.amount) >= parseInt(form.min_price.value) &&
+        parseInt(flight.price.total.amount) <= parseInt(form.max_price.value)
       );
     } else if (form.section_1.checked && !form.section_2.checked) {
       return (
         flight.legs[0].segments.length > 1 &&
-        flight.price.total.amount >= form.min_price.value &&
-        flight.price.total.amount <= form.max_price.value
+        parseInt(flight.price.total.amount) >= parseInt(form.min_price.value) &&
+        parseInt(flight.price.total.amount) <= parseInt(form.max_price.value)
       );
     } else {
-      return (
-        flight.price.total.amount >= form.min_price.value &&
-        flight.price.total.amount <= form.max_price.value
-      );
+      let answer =
+        parseInt(flight.price.total.amount) >= parseInt(form.min_price.value) &&
+        parseInt(flight.price.total.amount) <= parseInt(form.max_price.value);
+      return answer;
     }
   });
   if (form.sort.value === "price_increase") {
@@ -74,22 +89,20 @@ function filterFlights(flights) {
       (a, b) => a.flight.legs[0].duration - b.flight.legs[0].duration
     );
   }
-  getCarriersCheckboxes(filteredFlights);
-  // filterFlights = filterFlights.filter(({ flight }) => {});
-
-  console.log(
-    Array.from(form.querySelectorAll(".aside-form__checkbox-carriers"))
-      .filter((item) => item.firstElementChild.checked)
-      .map((item) => item.firstElementChild.name)
-  );
-
-  if (filteredFlights.length) getFlightCard(filteredFlights[cardIndex].flight);
+  return filteredFlights;
 }
 
-function getCarriersCheckboxes(flights) {
-  const carrierCheckGroup = document.querySelector(
-    ".aside-form__item_type_carriers"
-  );
+function filterByCarriers(flights) {
+  const form = document.forms.form;
+  const checkedCarriers = Array.from(
+    form.querySelectorAll(".aside-form__checkbox-carriers")
+  )
+    .filter((item) => item.firstElementChild.checked)
+    .map((item) => item.firstElementChild.name);
+  return flights;
+}
+
+function getCarriers(flights) {
   const carriers = {};
   flights.forEach(({ flight }) => {
     if (carriers.hasOwnProperty(flight.carrier.uid)) {
@@ -101,19 +114,60 @@ function getCarriersCheckboxes(flights) {
       };
     }
   });
-  let index = 0;
-  console.log(carriers);
+  return carriers;
+}
+
+function setPricesLimits(flights) {
+  const carriers = getCarriers(flights);
+  const minPriceEl = document.forms.form.min_price;
+  const maxPriceEl = document.forms.form.max_price;
+  let minPriceForAll = carriers[Object.keys(carriers)[0]].price.sort(
+    (a, b) => parseInt(a) - parseInt(b)
+  )[0];
+  let maxPriceForAll = carriers[Object.keys(carriers)[0]].price.sort(
+    (a, b) => parseInt(b) - parseInt(a)
+  )[0];
+
   for (const carrier in carriers) {
-    const carrierCheckEl = document.createElement("div");
-    carrierCheckEl.classList.add("aside-form__checkbox-carriers");
-    carrierCheckEl.innerHTML = `
+    let minPrice = carriers[carrier].price.sort(
+      (a, b) => parseInt(a) - parseInt(b)
+    )[0];
+    let maxPrice = carriers[carrier].price.sort(
+      (a, b) => parseInt(b) - parseInt(a)
+    )[0];
+    console.log(minPrice, minPriceForAll, maxPrice, maxPriceForAll);
+    if (parseInt(minPriceForAll) > parseInt(minPrice)) {
+      minPriceForAll = minPrice;
+    }
+    if (parseInt(maxPriceForAll) < parseInt(maxPrice)) {
+      maxPriceForAll = maxPrice;
+    }
+  }
+  minPriceEl.min = minPriceForAll;
+  minPriceEl.value = minPriceForAll;
+  maxPriceEl.max = maxPriceForAll;
+  maxPriceEl.value = maxPriceForAll;
+}
+
+function getCarriersCheckboxes(flights) {
+  const carriers = getCarriers(flights);
+  let index = 0;
+  if (Object.keys(carriers).length > 0) {
+    const carrierCheckGroup = document.querySelector(
+      ".aside-form__item_type_carriers"
+    );
+    for (const carrier in carriers) {
+      const carrierCheckEl = document.createElement("div");
+      carrierCheckEl.classList.add("aside-form__checkbox-carriers");
+      carrierCheckEl.innerHTML = `
         <input class="aside-form__checkbox" checked type="checkbox" name="${carrier}" id="check-carrier_${index}">
         <label class="aside-form__label-inline" for="check-carrier_${index}"><span class="aside__carrier-name">${
-      carriers[carrier].caption
-    }</span> от ${carriers[carrier].price.sort((a, b) => a - b)[0]} р.</label>
+        carriers[carrier].caption
+      }</span> от ${carriers[carrier].price.sort((a, b) => a - b)[0]} р.</label>
     `;
-    carrierCheckGroup.appendChild(carrierCheckEl);
-    index++;
+      carrierCheckGroup.appendChild(carrierCheckEl);
+      index++;
+    }
   }
 }
 
@@ -230,4 +284,4 @@ function getCardButton(flight) {
   return cardButton;
 }
 
-getFlightsData(url);
+data = getFlightsData(url);
