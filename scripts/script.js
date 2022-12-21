@@ -308,7 +308,7 @@ function getCardOneWay(flight, direction = "forward") {
   } <span class="smaller-text blue-text">${departureDate.getDate()} ${
     months[departureDate.getMonth()]
   }. ${weekDays[departureDate.getDay()]}</span></p>
-      <p class="main__card-time-travel"><i class="far fa-clock"></i> ${Math.floor(
+      <p class="main__card-time-travel"><span class="smaller-text"><i class="far fa-clock"></span></i> ${Math.floor(
         duration / 60
       )} ч ${duration % 60} мин</p>
       <p class="main__card-time-arrival"><span class="smaller-text blue-text">${arrivalDate.getDate()} ${
