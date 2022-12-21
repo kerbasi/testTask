@@ -10,6 +10,10 @@ Create a page form json data with some flights segments. Add sort and filter fun
 
 [Test instructions on russian](https://github.com/kerbasi/testTask/blob/main/frontend-test/instructions.md)
 
-#### Tools
+### Tools
 
 For this project I used HTML, CSS and JS.
+
+### TODO
+
+- Adaptive
