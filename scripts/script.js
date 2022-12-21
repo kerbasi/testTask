@@ -51,6 +51,7 @@ async function getFlightsData(url) {
       renderCard(data);
     })
   );
+  document.querySelector(".burger-menu").addEventListener("click", toggleMenu);
   document.querySelector(".main__button").addEventListener("click", () => {
     addCard(data);
   });
@@ -64,6 +65,15 @@ function renderCarriersCheck(flights) {
   let filteredFlights = filterFlights(flights);
   if (filteredFlights.length) {
     getCarriersCheckboxes(filteredFlights);
+  }
+}
+
+function toggleMenu() {
+  const burger = document.querySelector(".burger-menu");
+  if (burger.classList.contains("active")) {
+    burger.classList.remove("active");
+  } else {
+    burger.classList.add("active");
   }
 }
 
