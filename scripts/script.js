@@ -71,15 +71,16 @@ function renderCard(flights) {
   let filteredFlights = filterFlights(flights);
   filteredFlights = filterByCarriers(filteredFlights);
   console.log(cardIndex);
-  if (filteredFlights.length && filteredFlights.length > cardIndex) {
+  if (filteredFlights.length) {
     sortFlights(filteredFlights);
     getFlightCard(filteredFlights);
     cardIndex++;
+    if (filteredFlights.length > cardIndex) {
+      document.querySelector(".main__button").classList.add("disable");
+    }
     document.querySelector(".main__button").classList.remove("disable");
   } else if (filteredFlights.length === 0) {
     getMainMessage("Нет подходящих полетов");
-    document.querySelector(".main__button").classList.add("disable");
-  } else {
     document.querySelector(".main__button").classList.add("disable");
   }
 }
@@ -300,7 +301,10 @@ function getCardOneWay(flight, direction = "forward") {
   <section class="main__card-one-way">
     <div class="main__card-leg">
       <p class="main__card-leg-text">${departureCity}, ${departureAirport} <span class="blue-text">(${departureAirportUid}) <span
-            class="bigger-text">&rarr;</span></span> ${arrivalCity}, ${arrivalAirport} <span class="blue-text">(${arrivalAirportUid})</span></p>
+            class="bigger-text">&rarr;</span></span> ${arrivalCity},&nbsp;${arrivalAirport.replace(
+    " ",
+    "&nbsp;"
+  )}&nbsp;<span class="blue-text">(${arrivalAirportUid})</span></p>
     </div>
     <div class="main__card-time">
       <p class="main__card-time-departure">${departureDate.getHours()}:${

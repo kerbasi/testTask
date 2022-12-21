@@ -17,6 +17,20 @@
   max-width: 1200px;
 }
 
+@media screen and (max-width: 1024px) {
+  .page {
+    column-gap: 10px;
+    padding: 10px 0 10px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .page {
+    column-gap: 10px;
+    padding: 0;
+  }
+}
+
 .aside {
   flex-basis: 25%;
   max-width: 300px;
@@ -50,13 +64,19 @@
 }
 
 .aside__carrier-name {
-  max-width: 20ch;
+  max-width: 16ch;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
   position: relative;
   top: 4px;
+}
+
+@media screen and (max-width: 900px) {
+  .aside-form__item_type_carriers {
+    min-width: 226px;
+  }
 }
 
 .main {
@@ -66,7 +86,7 @@
 
 .main__card {
   width: 100%;
-  min-width: 640px;
+  max-width: 640px;
   margin-bottom: 20px;
   font-size: 17px;
 }
@@ -217,6 +237,64 @@
 .main__button:hover {
   background: var(--gray);
   cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+  .main__card {
+    font-size: 15px;
+  }
+
+  .main__card-time {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main__card {
+    font-size: 14px;
+  }
+
+  .main__card-time {
+    font-size: 16px;
+  }
+
+  .main__card-carrier {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .main__card-time {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .main__card-time-arrival {
+    margin: 5px;
+  }
+
+  .main__card-time-departure {
+    margin: 5px;
+  }
+
+  .main__card-time-travel {
+    margin: 5px;
+  }
+
+  .main__card-carrier {
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 556px) {
+  .aside {
+    display: none;
+  }
+
+  .main {
+    width: 95%;
+    min-width: 320px;
+  }
 }
 
 .popup {
