@@ -225,7 +225,9 @@ function getCarriersCheckboxes(flights) {
 }
 
 function getFlightCard(flights) {
+  console.log(flights);
   const flight = flights[cardIndex].flight;
+  console.log(flight);
   const main = document.querySelector(".main__cards");
   const card = document.createElement("article");
   const divider = document.createElement("div");
@@ -262,14 +264,18 @@ function getCardOneWay(flight, direction = "forward") {
   } else if (direction === "backward") {
     legIndex = 1;
   }
+
   const departureCity = flight.legs[legIndex].segments[0].departureCity.caption;
   const departureAirport =
     flight.legs[legIndex].segments[0].departureAirport.caption;
   const departureAirportUid =
     flight.legs[legIndex].segments[0].departureAirport.uid;
-  const arrivalCity =
-    flight.legs[legIndex].segments[flight.legs[legIndex].segments.length - 1]
-      .arrivalCity.caption;
+  const arrivalCity = flight.legs[legIndex].segments[
+    flight.legs[legIndex].segments.length - 1
+  ].hasOwnProperty("arrivalCity")
+    ? flight.legs[legIndex].segments[flight.legs[legIndex].segments.length - 1]
+        .arrivalCity.caption
+    : "--";
   const arrivalAirport =
     flight.legs[legIndex].segments[flight.legs[legIndex].segments.length - 1]
       .arrivalAirport.caption;
