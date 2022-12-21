@@ -6,7 +6,7 @@ Create a page form json data with some flights segments. Add sort and filter fun
 
 ### Example
 
-[Page example](https://github.com/kerbasi/testTask/blob/main/frontend-test/avia_search_results_.png)
+[Page png example](https://github.com/kerbasi/testTask/blob/main/frontend-test/avia_search_results_.png)
 
 [Test instructions on russian](https://github.com/kerbasi/testTask/blob/main/frontend-test/instructions.md)
 
