@@ -290,6 +290,7 @@
     column-gap: 10px;
     padding: 0;
     padding-left: 5px;
+    padding-bottom: 20px;
   }
 
   .aside-form__item_type_carriers {
@@ -351,7 +352,7 @@
 
 @media screen and (max-width: 556px) {
   .page {
-    padding: 0;
+    padding-left: 0;
     padding-top: 50px;
   }
 

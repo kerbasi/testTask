@@ -40,6 +40,8 @@ async function getFlightsData(url) {
 
   const form = document.forms.form;
   const popup = document.querySelector(".popup");
+  const burger = document.querySelector(".burger-menu");
+  const mainButton = document.querySelector(".main__button");
   data = responseData.result.flights;
   setPricesLimits(data);
   form.section_1.checked = false;
@@ -51,9 +53,9 @@ async function getFlightsData(url) {
       renderCard(data);
     })
   );
-  document.querySelector(".burger-menu").addEventListener("click", toggleMenu);
-  document.querySelector(".main__button").addEventListener("click", () => {
-    addCard(data);
+  burger.addEventListener("click", toggleMenu);
+  mainButton.addEventListener("click", () => {
+    renderCard(data);
   });
   form.section_2.checked = false;
   renderCarriersCheck(data);
@@ -142,10 +144,6 @@ function sortFlights(flights) {
       (a, b) => a.flight.legs[0].duration - b.flight.legs[0].duration
     );
   }
-}
-
-function addCard(flights) {
-  renderCard(data);
 }
 
 function filterByCarriers(flights) {
