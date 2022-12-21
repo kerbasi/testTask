@@ -218,6 +218,49 @@
   cursor: pointer;
 }
 
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: var(--blue);
+}
+
+.burger-menu {
+  display: block;
+  position: relative;
+  top: 5px;
+  left: 5px;
+  width: 30px;
+  height: 20px;
+}
+
+.burger-menu span {
+  position: absolute;
+  background-color: var(--white);
+  width: 100%;
+  height: 2px;
+  top: 9px;
+}
+
+.burger-menu:before,
+.burger-menu:after {
+  content: "";
+  background-color: var(--white);
+  position: absolute;
+  width: 100%;
+  height: 2px;
+}
+
+.burger-menu:before {
+  top: 0;
+}
+
+.burger-menu:after {
+  bottom: 0;
+}
+
 @media screen and (max-width: 1024px) {
   .page {
     column-gap: 10px;
@@ -292,6 +335,7 @@
 @media screen and (max-width: 556px) {
   .page {
     padding: 0;
+    padding-top: 40px;
   }
 
   .main__card-leg {
