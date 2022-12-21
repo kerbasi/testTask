@@ -2,7 +2,7 @@
 
 ## Task
 
-Create a page form json data with some flights segments. Add sort and filter functionality from the provided form. Page shouldn't reload then form changes.
+Create a page form json data with some flights segments. Add sort and filter functionality from the provided form. Page shouldn't reload while form changes.
 
 ### Example
 
