@@ -28,6 +28,7 @@
   .page {
     column-gap: 10px;
     padding: 0;
+    padding-left: 5px;
   }
 }
 
@@ -147,7 +148,6 @@
 
 .main__card-leg {
   width: 95%;
-
   padding-left: 5px;
   box-sizing: border-box;
   margin: 0 auto;
@@ -254,11 +254,16 @@
     font-size: 14px;
   }
 
+  .main__card-leg {
+    text-align: center;
+  }
+
   .main__card-time {
     font-size: 16px;
   }
 
   .main__card-carrier {
+    text-align: center;
     font-size: 1em;
   }
 }
