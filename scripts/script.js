@@ -39,6 +39,7 @@ async function getFlightsData(url) {
   let responseData = await response.json();
 
   const form = document.forms.form;
+  const popup = document.querySelector(".popup");
   data = responseData.result.flights;
   setPricesLimits(data);
   form.section_1.checked = false;
@@ -56,6 +57,7 @@ async function getFlightsData(url) {
   form.section_2.checked = false;
   renderCarriersCheck(data);
   renderCard(data);
+  popup.classList.add("disable");
 }
 
 function renderCarriersCheck(flights) {
@@ -239,6 +241,7 @@ function getFlightCard(flights) {
   card.appendChild(getCardOneWay(flight, "backward"));
   card.appendChild(getCardButton(flight));
   main.appendChild(card);
+  card.scrollIntoView({ behavior: "smooth" });
 }
 
 function getCardHeader(flight) {
