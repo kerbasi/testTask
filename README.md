@@ -17,4 +17,4 @@ For this project I used HTML, CSS and JS.
 ### TODO
 
 - ~~Adaptive~~
-- Burger menu for small media
+- ~~Burger menu for small media~~
