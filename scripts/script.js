@@ -70,10 +70,13 @@ function renderCarriersCheck(flights) {
 
 function toggleMenu() {
   const burger = document.querySelector(".burger-menu");
+  const aside = document.querySelector(".aside");
   if (burger.classList.contains("active")) {
     burger.classList.remove("active");
+    aside.classList.remove("enable");
   } else {
     burger.classList.add("active");
+    aside.classList.add("enable");
   }
 }
 
